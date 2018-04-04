@@ -1,0 +1,75 @@
+﻿@model IEnumerable<IntegracaoPsP.Domain.Entities.Xml.Integration>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Entidade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DtEntrada)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.XmlRecebido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.XmlAlterado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Situacao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NomeArquivo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DtProcessamento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DtRetorno)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Entidade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DtEntrada)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.XmlRecebido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.XmlAlterado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Situacao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomeArquivo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DtProcessamento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DtRetorno)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IntegrationId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IntegrationId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IntegrationId })
+        </td>
+    </tr>
+}
+
+</table>

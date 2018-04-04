@@ -1,0 +1,58 @@
+﻿@model IntegracaoPsP.Domain.Entities.Log.LogMessage
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LogMessage</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Linha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Linha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeEntidade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeEntidade)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Message)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Message)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MessageSystem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MessageSystem)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

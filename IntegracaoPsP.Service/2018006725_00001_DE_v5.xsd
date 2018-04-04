@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="fichaDadosEmbarcacao">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="numeroDuv" type="xs:unsignedInt" />
+        <xs:element name="agenteMaritimo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="nomeAgencia" type="xs:string" />
+              <xs:element name="cnpjAgenciaNavegacao" type="xs:unsignedLong" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dataHoraPrevistaAtracacao" type="xs:string" />
+        <xs:element name="dataHoraPrevistaDesatracacao" type="xs:string" />
+        <xs:element name="embarcacao">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="numeroIMO" type="xs:unsignedInt" />
+              <xs:element name="nomeEmbarcacao" type="xs:string" />
+              <xs:element name="areaNavegacao" type="xs:string" />
+              <xs:element name="nomeSociedadeClassificacao" type="xs:string" />
+              <xs:element name="numeroInternacionalRegistro" type="xs:unsignedInt" />
+              <xs:element name="portariaHomologacaoHeliponto" />
+              <xs:element name="autonomiaRetencao" type="xs:decimal" />
+              <xs:element name="finalidade" type="xs:string" />
+              <xs:element name="tipoEmbarcacao" type="xs:string" />
+              <xs:element name="dataCertificadoRegistro" type="xs:string" />
+              <xs:element name="numeroProvisorioRegistro" />
+              <xs:element name="numeroPRPM" />
+              <xs:element name="numeroTie" />
+              <xs:element name="numeroPreps" />
+              <xs:element name="dataAdesaoPreps" />
+              <xs:element name="inscricao" />
+              <xs:element name="estadoBandeira" type="xs:unsignedShort" />
+              <xs:element name="armadorProprietario">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="codigoCoana" type="xs:string" />
+                    <xs:element name="nomeArmador" type="xs:string" />
+                    <xs:element name="sedeArmador" type="xs:unsignedShort" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="armadorAfretador">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="codigoCoana" type="xs:string" />
+                    <xs:element name="nomeArmador" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="alturaBordaLivre" />
+              <xs:element name="capacidadeEquipamentoBordaLivre" />
+              <xs:element name="anoFabricacao" />
+              <xs:element name="meiosComunicacao">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="irin" type="xs:string" />
+                    <xs:element name="numeroINMARSAT" type="xs:unsignedInt" />
+                    <xs:element name="codigoChamadaDSC" type="xs:string" />
+                    <xs:element name="frequenciaDSC" type="xs:decimal" />
+                    <xs:element name="tipoSisOperacaoEPIRB" type="xs:string" />
+                    <xs:element name="radiotelefonia" type="xs:string" />
+                    <xs:element name="radiotelegrafia" type="xs:string" />
+                    <xs:element name="radiotelex" type="xs:boolean" />
+                    <xs:element name="sartTransponder" type="xs:boolean" />
+                    <xs:element name="tipoINMARSAT" type="xs:string" />
+                    <xs:element name="transponder9Ghz" type="xs:boolean" />
+                    <xs:element name="navtex" type="xs:boolean" />
+                    <xs:element name="preps" type="xs:boolean" />
+                    <xs:element name="numEPIRB" type="xs:unsignedShort" />
+                    <xs:element name="numeroMMSIEPIRB" type="xs:unsignedInt" />
+                    <xs:element name="modeloEPIRB" type="xs:string" />
+                    <xs:element name="fabricanteEPIRB" type="xs:string" />
+                    <xs:element name="outrosEquip" />
+                    <xs:element name="empresaManutencao">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="nomeEmpresaManutEPIRB" />
+                          <xs:element name="nomePresidEmpManutEPIRB" />
+                          <xs:element name="nomeChefeManutEmpManutEPIRB" />
+                          <xs:element name="enderecoEmpManutEPIRB" />
+                          <xs:element name="cidadeEmpManutEPIRB" />
+                          <xs:element name="cepEmpManutEPIRB" />
+                          <xs:element name="telEmpManutEPIRB" />
+                          <xs:element name="telexEmpManutEPIRB" />
+                          <xs:element name="faxEmpManutEPIRB" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="caracteristicas">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="largura" type="xs:decimal" />
+                    <xs:element name="comprimento" type="xs:decimal" />
+                    <xs:element name="altura" type="xs:decimal" />
+                    <xs:element name="caladoMaximo" type="xs:decimal" />
+                    <xs:element name="caladoMinimo" type="xs:decimal" />
+                    <xs:element name="capacidadeMaximaAgua" type="xs:decimal" />
+                    <xs:element name="arqueacaoBruta" type="xs:decimal" />
+                    <xs:element name="dwt" type="xs:decimal" />
+                    <xs:element name="capacidadeAguaLastro" type="xs:decimal" />
+                    <xs:element name="arqueacaoLiquida" type="xs:decimal" />
+                    <xs:element name="velocidadeMaxima" type="xs:decimal" />
+                    <xs:element name="capacidadeMaximaEfluentes" type="xs:decimal" />
+                    <xs:element name="numeroCozinhas" type="xs:unsignedByte" />
+                    <xs:element name="numeroTanquesLastro" type="xs:unsignedByte" />
+                    <xs:element name="corCasco" />
+                    <xs:element name="tipoCasco" type="xs:string" />
+                    <xs:element name="corSuperestrutura" />
+                    <xs:element name="tipoSuperestrutura" type="xs:string" />
+                    <xs:element name="camarasRefrigeradas" type="xs:unsignedByte" />
+                    <xs:element name="numeroLeitosHospital" />
+                    <xs:element name="numeroPiscinaAdulto" />
+                    <xs:element name="numeroPiscinaInfantil" />
+                    <xs:element name="numeroRestaurantes" />
+                    <xs:element name="unidadesArCondicionado" />
+                    <xs:element name="banheirasHidromassagem" />
+                    <xs:element name="totalTanques" />
+                    <xs:element name="numeroPoroes" type="xs:unsignedByte" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="indicadores">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="incineradores" type="xs:boolean" />
+                    <xs:element name="heliponto" type="xs:boolean" />
+                    <xs:element name="coletaSeletiva" type="xs:boolean" />
+                    <xs:element name="estacaoTratamentoEsgoto" type="xs:boolean" />
+                    <xs:element name="estacaoTratamentoAgua" type="xs:boolean" />
+                    <xs:element name="equipamentosPlanosSeguranca" type="xs:boolean" />
+                    <xs:element name="certificadoTemporario" type="xs:boolean" />
+                    <xs:element name="porao" type="xs:boolean" />
+                    <xs:element name="salaResiduosSolidos" type="xs:boolean" />
+                    <xs:element name="salaoBeleza" type="xs:boolean" />
+                    <xs:element name="spa" type="xs:boolean" />
+                    <xs:element name="indicadorAIT" type="xs:boolean" />
+                    <xs:element name="sauna" type="xs:boolean" />
+                    <xs:element name="possuiGuindaste" type="xs:boolean" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="certificados">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="certificados">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="numero" type="xs:string" />
+                          <xs:element name="dataEmissao" type="xs:string" />
+                          <xs:element name="dataExpiracao" type="xs:string" />
+                          <xs:element name="tipo" type="xs:string" />
+                          <xs:element name="unidadeLocalEmitente" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="passeEntrada">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="numero" type="xs:string" />
+                    <xs:element name="nomeVisitador" type="xs:string" />
+                    <xs:element name="dataVisita" type="xs:string" />
+                    <xs:element name="local" type="xs:string" />
+                    <xs:element name="tipoGRU" />
+                    <xs:element name="observacao" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="passeSaida">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="numero" type="xs:string" />
+                    <xs:element name="dataLiberacao" type="xs:string" />
+                    <xs:element name="local" type="xs:string" />
+                    <xs:element name="tipoGRU" />
+                    <xs:element name="observacao" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

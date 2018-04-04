@@ -1,0 +1,129 @@
+﻿<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="fichaAvisoAtracacao">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="dataHoraSistema"/>
+        <xs:element type="xs:int" name="numeroDuv"/>
+        <xs:element type="xs:string" name="portoEstadia"/>
+        <xs:element type="xs:string" name="assumeEstadia"/>
+        <xs:element type="xs:string" name="duracaoInferior24h"/>
+        <xs:element type="xs:string" name="dataHoraPrevistaAtracacao"/>
+        <xs:element name="locaisPrevistosAtracacao">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="localPrevistoAtracacao">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="areaPorto"/>
+                    <xs:element type="xs:short" name="berco"/>
+                    <xs:element type="xs:long" name="cnpjArrendatario"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="fundeadourosPrevistosAtracacao"/>
+        <xs:element type="xs:string" name="dataHoraPrevistaDesatracacao"/>
+        <xs:element type="xs:string" name="ultimoPortoEscala"/>
+        <xs:element type="xs:string" name="proximoPortoEscala"/>
+        <xs:element name="agenteMaritimo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="nomeAgencia"/>
+              <xs:element type="xs:long" name="cnpjAgenciaNavegacao"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="avisoAtracacao">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="dataHoraEsperada"/>
+              <xs:element type="xs:string" name="cargaPerigosa"/>
+              <xs:element type="xs:byte" name="qtdeConteineres"/>
+              <xs:element type="xs:string" name="pesoCarga"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="embarcacao">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:int" name="numeroIMO"/>
+              <xs:element type="xs:string" name="inscricao"/>
+              <xs:element type="xs:string" name="nomeEmbarcacao"/>
+              <xs:element type="xs:short" name="estadoBandeira"/>
+              <xs:element type="xs:float" name="caladoMaximo"/>
+              <xs:element type="xs:float" name="caladoEntradaProa"/>
+              <xs:element type="xs:float" name="caladoEntradaPopa"/>
+              <xs:element type="xs:float" name="caladoSaidaProa"/>
+              <xs:element type="xs:float" name="caladoSaidaPopa"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="estadiaEmbarcacao">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="prioridadePretendida"/>
+              <xs:element type="xs:byte" name="qtdeDiasPrevistosOperacao"/>
+              <xs:element type="xs:string" name="numeroViagemAgencia"/>
+              <xs:element type="xs:byte" name="tipoViagemOrigem"/>
+              <xs:element type="xs:byte" name="tipoViagemDestino"/>
+              <xs:element type="xs:string" name="tipoCarga"/>
+              <xs:element type="xs:string" name="destinoCarga"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="representanteLegal">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:long" name="identificador"/>
+              <xs:element type="xs:string" name="nomeRepresentante"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ratificacoesOperador">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ratificacaoOperador">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:long" name="operador"/>
+                    <xs:element type="xs:string" name="nomeOperador"/>
+                    <xs:element type="xs:string" name="operacaoContratada"/>
+                    <xs:element type="xs:string" name="contratoCodesp"/>
+                    <xs:element type="xs:byte" name="qtdePeriodos"/>
+                    <xs:element type="xs:string" name="destinoProcedenciaCarga"/>
+                    <xs:element type="xs:byte" name="embalagem"/>
+                    <xs:element type="xs:string" name="mercadoria"/>
+                    <xs:element name="locaisOperacaoPorto">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="localOperacaoPorto">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="areaPorto"/>
+                                <xs:element type="xs:short" name="berco"/>
+                                <xs:element type="xs:long" name="cnpjArrendatario"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:string" name="fundeadourosOperacaoPorto"/>
+                    <xs:element type="xs:byte" name="qtdeConteineres"/>
+                    <xs:element type="xs:string" name="peso"/>
+                    <xs:element type="xs:string" name="tiposFaturamentoOperador"/>
+                    <xs:element type="xs:string" name="tiposFaturamentoAgencia"/>
+                    <xs:element type="xs:string" name="tiposFaturamentoArmador"/>
+                    <xs:element type="xs:string" name="tiposFaturamentoRecebedor"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

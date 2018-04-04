@@ -1,0 +1,76 @@
+﻿<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="fichaPrevisaoEstadia">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:int" name="numeroDuv"/>
+        <xs:element type="xs:string" name="portoEstadia"/>
+        <xs:element type="xs:string" name="dataHoraPrevistaAtracacao"/>
+        <xs:element name="locaisPrevistosAtracacao">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="localPrevistoAtracacao">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="areaPorto"/>
+                    <xs:element type="xs:short" name="berco"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="fundeadourosPrevistosAtracacao"/>
+        <xs:element type="xs:string" name="dataHoraPrevistaDesatracacao"/>
+        <xs:element name="agenteMaritimo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="nomeAgencia"/>
+              <xs:element type="xs:long" name="cnpjAgenciaNavegacao"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="embarcacao">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:int" name="numeroIMO"/>
+              <xs:element type="xs:string" name="inscricao"/>
+              <xs:element type="xs:string" name="nomeEmbarcacao"/>
+              <xs:element type="xs:short" name="estadoBandeira"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="estadiaEmbarcacao">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="motivoAtracacao">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="motivoAtracacao"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:byte" name="qtdeDiasPrevistosOperacao"/>
+              <xs:element type="xs:string" name="embarcacaoCarregada"/>
+              <xs:element type="xs:string" name="tipoViagemOrigem"/>
+              <xs:element type="xs:string" name="tipoViagemDestino"/>
+              <xs:element type="xs:string" name="cargaPerigosa"/>
+              <xs:element type="xs:string" name="prioridadePretendida"/>
+              <xs:element type="xs:string" name="destinoCarga"/>
+              <xs:element name="operacaoCargas">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="especialidadeCargaPredominante"/>
+                    <xs:element type="xs:string" name="tipoCarga"/>
+                    <xs:element type="xs:byte" name="qtdeConteineres"/>
+                    <xs:element type="xs:string" name="descricaoCarga"/>
+                    <xs:element type="xs:string" name="pesoCarga"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

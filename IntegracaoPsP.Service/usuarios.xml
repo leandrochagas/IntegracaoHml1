@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<header xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <HeaderManifestoId>0</HeaderManifestoId>
+  <Identificador>101</Identificador>
+  <CNPJBase>00728995</CNPJBase>
+  <CNPJFilial>0001</CNPJFilial>
+  <CNPJControle>01</CNPJControle>
+  <NomeEmpresa>UNIMAR AGENCIAMENTOS MARITIMOS LTDA</NomeEmpresa>
+  <NumeroViagem>00009/2017</NumeroViagem>
+  <NumeroViagemAgencia>0701</NumeroViagemAgencia>
+  <DataGravacaoArquivo>22122017</DataGravacaoArquivo>
+  <HoraArquivo>125517</HoraArquivo>
+  <CNPJBaseDestinatario>00000000</CNPJBaseDestinatario>
+  <CNPJFilialDestinatario>0000</CNPJFilialDestinatario>
+  <CNPJControleDestinatario>00</CNPJControleDestinatario>
+  <NomeDestinatario />
+  <LloydRegister>09459539</LloydRegister>
+  <TipoArquivo>A</TipoArquivo>
+  <Sequencial>0</Sequencial>
+</header>

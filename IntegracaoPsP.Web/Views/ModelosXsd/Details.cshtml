@@ -1,0 +1,66 @@
+﻿@model IntegracaoPsP.Domain.Entities.Others.ModeloXsd
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ModeloXsd</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeArquivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeArquivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Versao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Versao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Modelo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Modelo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StAtivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StAtivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ModeloXsdId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

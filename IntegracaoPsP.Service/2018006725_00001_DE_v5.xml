@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fichaDadosEmbarcacao>
+  <numeroDuv>67252018</numeroDuv>
+  <agenteMaritimo>
+    <nomeAgencia>OCEANUS AGENCIA MARITIMA SA</nomeAgencia>
+    <cnpjAgenciaNavegacao>32082489002128</cnpjAgenciaNavegacao>
+  </agenteMaritimo>
+  <dataHoraPrevistaAtracacao>29/03/2018 14:30</dataHoraPrevistaAtracacao>
+  <dataHoraPrevistaDesatracacao>30/03/2018 02:00</dataHoraPrevistaDesatracacao>
+  <embarcacao>
+    <numeroIMO>9705055</numeroIMO>
+    <nomeEmbarcacao>CMA CGM LITANI</nomeEmbarcacao>
+    <areaNavegacao>IMPORT/EXPORT/LONGO CURSO</areaNavegacao>
+    <nomeSociedadeClassificacao>BV</nomeSociedadeClassificacao>
+    <numeroInternacionalRegistro>9705055</numeroInternacionalRegistro>
+    <portariaHomologacaoHeliponto></portariaHomologacaoHeliponto>
+    <autonomiaRetencao>20.0</autonomiaRetencao>
+    <finalidade>Transporte de Contentores</finalidade>
+    <tipoEmbarcacao>Porta Contentor</tipoEmbarcacao>
+    <dataCertificadoRegistro>29/11/2017</dataCertificadoRegistro>
+    <numeroProvisorioRegistro></numeroProvisorioRegistro>
+    <numeroPRPM></numeroPRPM>
+    <numeroTie></numeroTie>
+    <numeroPreps></numeroPreps>
+    <dataAdesaoPreps></dataAdesaoPreps>
+    <inscricao></inscricao>
+    <estadoBandeira>467</estadoBandeira>
+    <armadorProprietario>
+      <codigoCoana>-</codigoCoana>
+      <nomeArmador>CMA-CGM SOCIÉTÉ ANONYME</nomeArmador>
+      <sedeArmador>275</sedeArmador>
+    </armadorProprietario>
+    <armadorAfretador>
+      <codigoCoana>-</codigoCoana>
+      <nomeArmador>CMA-CGM SOCIÉTÉ ANONYME</nomeArmador>
+    </armadorAfretador>
+    <alturaBordaLivre></alturaBordaLivre>
+    <capacidadeEquipamentoBordaLivre></capacidadeEquipamentoBordaLivre>
+    <anoFabricacao></anoFabricacao>
+    <meiosComunicacao>
+      <irin>9HA3793</irin>
+      <numeroINMARSAT>425603310</numeroINMARSAT>
+      <codigoChamadaDSC>VHF</codigoChamadaDSC>
+      <frequenciaDSC>0.0</frequenciaDSC>
+      <tipoSisOperacaoEPIRB>C</tipoSisOperacaoEPIRB>
+      <radiotelefonia>VHF</radiotelefonia>
+      <radiotelegrafia>NA</radiotelegrafia>
+      <radiotelex>false</radiotelex>
+      <sartTransponder>true</sartTransponder>
+      <tipoINMARSAT>C</tipoINMARSAT>
+      <transponder9Ghz>false</transponder9Ghz>
+      <navtex>true</navtex>
+      <preps>false</preps>
+      <numEPIRB>03630</numEPIRB>
+      <numeroMMSIEPIRB>256033000</numeroMMSIEPIRB>
+      <modeloEPIRB>TRON40 VDR</modeloEPIRB>
+      <fabricanteEPIRB>JOTRON</fabricanteEPIRB>
+      <outrosEquip></outrosEquip>
+      <empresaManutencao>
+        <nomeEmpresaManutEPIRB></nomeEmpresaManutEPIRB>
+        <nomePresidEmpManutEPIRB></nomePresidEmpManutEPIRB>
+        <nomeChefeManutEmpManutEPIRB></nomeChefeManutEmpManutEPIRB>
+        <enderecoEmpManutEPIRB></enderecoEmpManutEPIRB>
+        <cidadeEmpManutEPIRB></cidadeEmpManutEPIRB>
+        <cepEmpManutEPIRB></cepEmpManutEPIRB>
+        <telEmpManutEPIRB></telEmpManutEPIRB>
+        <telexEmpManutEPIRB></telexEmpManutEPIRB>
+        <faxEmpManutEPIRB></faxEmpManutEPIRB>
+      </empresaManutencao>
+    </meiosComunicacao>
+    <caracteristicas>
+      <largura>48.2</largura>
+      <comprimento>299.95</comprimento>
+      <altura>24.6</altura>
+      <caladoMaximo>14.8</caladoMaximo>
+      <caladoMinimo>9.86</caladoMinimo>
+      <capacidadeMaximaAgua>460.0</capacidadeMaximaAgua>
+      <arqueacaoBruta>95793.0</arqueacaoBruta>
+      <dwt>112062.0</dwt>
+      <capacidadeAguaLastro>35371.3</capacidadeAguaLastro>
+      <arqueacaoLiquida>37642.0</arqueacaoLiquida>
+      <velocidadeMaxima>22.0</velocidadeMaxima>
+      <capacidadeMaximaEfluentes>174.0</capacidadeMaximaEfluentes>
+      <numeroCozinhas>1</numeroCozinhas>
+      <numeroTanquesLastro>30</numeroTanquesLastro>
+      <corCasco></corCasco>
+      <tipoCasco>Duplo</tipoCasco>
+      <corSuperestrutura></corSuperestrutura>
+      <tipoSuperestrutura>A meio navio</tipoSuperestrutura>
+      <camarasRefrigeradas>2</camarasRefrigeradas>
+      <numeroLeitosHospital></numeroLeitosHospital>
+      <numeroPiscinaAdulto></numeroPiscinaAdulto>
+      <numeroPiscinaInfantil></numeroPiscinaInfantil>
+      <numeroRestaurantes></numeroRestaurantes>
+      <unidadesArCondicionado></unidadesArCondicionado>
+      <banheirasHidromassagem></banheirasHidromassagem>
+      <totalTanques></totalTanques>
+      <numeroPoroes>5</numeroPoroes>
+    </caracteristicas>
+    <indicadores>
+      <incineradores>true</incineradores>
+      <heliponto>false</heliponto>
+      <coletaSeletiva>true</coletaSeletiva>
+      <estacaoTratamentoEsgoto>true</estacaoTratamentoEsgoto>
+      <estacaoTratamentoAgua>true</estacaoTratamentoAgua>
+      <equipamentosPlanosSeguranca>true</equipamentosPlanosSeguranca>
+      <certificadoTemporario>false</certificadoTemporario>
+      <porao>true</porao>
+      <salaResiduosSolidos>true</salaResiduosSolidos>
+      <salaoBeleza>false</salaoBeleza>
+      <spa>false</spa>
+      <indicadorAIT>false</indicadorAIT>
+      <sauna>false</sauna>
+      <possuiGuindaste>false</possuiGuindaste>
+    </indicadores>
+    <certificados>
+      <certificados>
+        <numero>20150306133256</numero>
+        <dataEmissao>05/08/2016</dataEmissao>
+        <dataExpiracao>15/05/2020</dataExpiracao>
+        <tipo>Certificado Internacional de Proteção de Navios (ISPS Code)</tipo>
+        <unidadeLocalEmitente></unidadeLocalEmitente>
+      </certificados>
+      <certificados>
+        <numero>01/18</numero>
+        <dataEmissao>05/01/2018</dataEmissao>
+        <dataExpiracao>05/07/2018</dataExpiracao>
+        <tipo>Certificado de Isenção de Controle Sanitário de Bordo (CICSB)</tipo>
+        <unidadeLocalEmitente></unidadeLocalEmitente>
+      </certificados>
+      <certificados>
+        <numero>N/A</numero>
+        <dataEmissao>05/08/2016</dataEmissao>
+        <dataExpiracao>15/05/2020</dataExpiracao>
+        <tipo>ISSC - International Ship Security Certificate</tipo>
+        <unidadeLocalEmitente></unidadeLocalEmitente>
+      </certificados>
+      <certificados>
+        <numero>N/A</numero>
+        <dataEmissao>19/11/2014</dataEmissao>
+        <dataExpiracao>18/11/2019</dataExpiracao>
+        <tipo>Minimum Safe Manning Document</tipo>
+        <unidadeLocalEmitente></unidadeLocalEmitente>
+      </certificados>
+      <certificados>
+        <numero>N/A</numero>
+        <dataEmissao>01/12/2017</dataEmissao>
+        <dataExpiracao>01/12/2018</dataExpiracao>
+        <tipo>Relatório de Inspeção do Port State Control (PSC) ou Flag State Control (FSC) - FORM "A"</tipo>
+        <unidadeLocalEmitente></unidadeLocalEmitente>
+      </certificados>
+    </certificados>
+    <passeEntrada>
+      <numero>003731/2018</numero>
+      <nomeVisitador>Eduardo Hara</nomeVisitador>
+      <dataVisita>23/02/2018 08:50</dataVisita>
+      <local>Polícia Federal do Rio de Janeiro</local>
+      <tipoGRU></tipoGRU>
+      <observacao></observacao>
+    </passeEntrada>
+    <passeSaida>
+      <numero>003731/2018</numero>
+      <dataLiberacao>23/02/2018 08:48</dataLiberacao>
+      <local>Polícia Federal do Rio de Janeiro</local>
+      <tipoGRU></tipoGRU>
+      <observacao></observacao>
+    </passeSaida>
+  </embarcacao>
+</fichaDadosEmbarcacao>

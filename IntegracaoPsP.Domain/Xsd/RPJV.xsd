@@ -1,0 +1,32 @@
+﻿<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="fichaRegistroParceiroJV">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:int" name="numeroDuv"/>
+        <xs:element type="xs:int" name="numeroViagem"/>
+        <xs:element name="agenteMaritimo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="nomeAgencia"/>
+              <xs:element type="xs:long" name="cnpjAgenciaNavegacao"/>
+              <xs:element name="cnpjJointVenturesAutorizadas">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="cnpjJointVentureAutorizada" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:long" name="cnpj"/>
+                          <xs:element type="xs:string" name="tipoTrafego"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
