@@ -14,9 +14,9 @@ using System.Linq;
 using IntegracaoPsP.Web.Models;
 using IntegracaoPsP.Domain.Entities.Validacao;
 using IntegracaoPsP.Domain.Entities.Boletim;
-using System.Xml.Schema;
-using System.Xml;
 using System.Text.RegularExpressions;
+using System.Net;
+using Limilabs.FTP.Client;
 
 namespace IntegracaoPsP.Service.Functions
 {
@@ -58,8 +58,7 @@ namespace IntegracaoPsP.Service.Functions
             Granel = 110,
             MercadoriaConteinerizada = 111,
             BoletimDescricao = 112,
-            Trailler = 199,
-            Erro = 999
+            Trailler = 199
         };
      
         public List<Data> ReadTxt(string caminho)
@@ -2415,10 +2414,12 @@ namespace IntegracaoPsP.Service.Functions
 
                     #region inserir tabela integracao      
                     Utils integraManifesto = new Utils();
+
+                   
                     if (nomearquivo.Contains("ARQBOL"))
-                        integraManifesto.InsereIntegracaoXML("Boletim", xManifesto.ToString(), nomearquivo);
+                        integraManifesto.InsereIntegracaoTxt("Boletim", xManifesto.ToString(), nomearquivo,int.Parse(objTraillerBoletim.QuantidadeTotalRegistro));
                     else
-                        integraManifesto.InsereIntegracaoXML("Manifesto", xManifesto.ToString(), nomearquivo);
+                        integraManifesto.InsereIntegracaoTxt("Manifesto", xManifesto.ToString(), nomearquivo, int.Parse(objTrailler.QuantidadeTotalRegistro));
                     #endregion
 
 
@@ -2913,18 +2914,6 @@ namespace IntegracaoPsP.Service.Functions
             SqlConnection conn = ConexaoDb();
             conn.Open();
 
-
-            //LogMessage obj = new LogMessage();
-            //obj.Linha = linha;
-            //obj.NomeEntidade = nomeEntidade;
-            //obj.Data = DateTime.Now;
-            //obj.Message = message;
-            //obj.MessageSystem = messageSystem;
-            //obj.NomeArquivo = nomearquivo;
-            //db.LogMensagens.Add(obj);
-
-            //db.SaveChanges();
-
             try
             {
                 objCmd = new SqlCommand(str, conn);
@@ -2952,6 +2941,8 @@ namespace IntegracaoPsP.Service.Functions
         }
         #endregion
 
+
+        #region Insert Integrações
         public void InsereIntegracaoXML(string nomeEntidade, string xml, string nomeArquivo)
         {
 
@@ -2969,14 +2960,16 @@ namespace IntegracaoPsP.Service.Functions
                    ,[DtEntrada]
                    ,[XMLRecebido]
                    ,[Situacao]
-                   ,[NomeArquivo])
+                   ,[NomeArquivo]
+                   ,[QtdeRegistros])
                     VALUES
                    (
                     @Entidade
                    ,@DtEntrada
                    ,@XMLRecebido
                    ,@Situacao
-                   ,@NomeArquivo)  ";
+                   ,@NomeArquivo
+                   ,@QtdeRegistros)  ";
             SqlConnection conn = ConexaoDb();
             conn.Open();
             try
@@ -2988,6 +2981,7 @@ namespace IntegracaoPsP.Service.Functions
                 objCmd.Parameters.AddWithValue("@XMLRecebido", xml);
                 objCmd.Parameters.AddWithValue("@Situacao", "Aguardando");
                 objCmd.Parameters.AddWithValue("@NomeArquivo",nomeArquivo);
+                objCmd.Parameters.AddWithValue("@QtdeRegistros", 0);
                 objCmd.ExecuteNonQuery();
             }
             catch (Exception e)
@@ -3005,7 +2999,269 @@ namespace IntegracaoPsP.Service.Functions
             }
             
         }
-        public string VarrerDiretorio(string caminhoIndividual)
+
+        public void InsereIntegracaoTxt(string nomeEntidade, string xml, string nomeArquivo, int QtdeRegistro)
+        {
+
+            string str = "";
+            SqlCommand objCmd;
+            str = @"INSERT INTO [dbo].[Integration]
+                   (
+                    [Entidade]
+                   ,[DtEntrada]
+                   ,[TxtRecebido]
+                   ,[Situacao]
+                   ,[NomeArquivo]
+                   ,[QtdeRegistros])
+                    VALUES
+                   (
+                    @Entidade
+                   ,@DtEntrada
+                   ,@TxtRecebido
+                   ,@Situacao
+                   ,@NomeArquivo
+                   ,@QtdeRegistros)  ";
+            SqlConnection conn = ConexaoDb();
+            conn.Open();
+            try
+            {
+                objCmd = new SqlCommand(str, conn);
+                objCmd.Parameters.AddWithValue("@Entidade", nomeEntidade);
+                objCmd.Parameters.AddWithValue("@DtEntrada", DateTime.Now);
+                objCmd.Parameters.AddWithValue("@TxtRecebido", xml);
+                objCmd.Parameters.AddWithValue("@Situacao", "Aguardando");
+                objCmd.Parameters.AddWithValue("@NomeArquivo", nomeArquivo);
+                objCmd.Parameters.AddWithValue("@QtdeRegistros", QtdeRegistro);
+                objCmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Utils util = new Utils();
+                if (db.LogMensagens.Where(x => x.NomeEntidade == nomeEntidade).Count() > 0)
+                    // Limpa os erros anteriores do arquivo
+                    RemoveLogMessage(nomeEntidade, nomeArquivo);
+
+                util.InsereLog(0, nomeEntidade, nomeArquivo, "System",e.ToString());
+            }
+
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+
+        }
+
+        public void InsereHistoricoIntegracao(string nomeEntidade, int qtde, string nomeArquivo)
+        {
+
+            string str = "";
+            SqlCommand objCmd;
+            str = @"INSERT INTO [dbo].[IntegrationHistoric]
+                   (
+                    [Entidade]
+                   ,[DataEnvio]
+                   ,[QtdeRegistros]
+                   ,[NomeArquivo])
+                    VALUES
+                   (
+                    @Entidade
+                   ,@DataEnvio
+                   ,@QtdeRegistros
+                   ,@NomeArquivo
+                   )  ";
+            SqlConnection conn = ConexaoDb();
+            conn.Open();
+            try
+            {
+                objCmd = new SqlCommand(str, conn);
+
+                objCmd.Parameters.AddWithValue("@Entidade", nomeEntidade);
+                objCmd.Parameters.AddWithValue("@DataEnvio", DateTime.Now);
+                objCmd.Parameters.AddWithValue("@QtdeRegistros", qtde);
+                objCmd.Parameters.AddWithValue("@Situacao", "Aguardando");
+                objCmd.Parameters.AddWithValue("@NomeArquivo", nomeArquivo);
+                objCmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Utils util = new Utils();
+                util.InsereLog(0, nomeEntidade, nomeArquivo, "System", e.ToString());
+            }
+
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+
+        }
+
+        public void UpdateIntegracao(string nomeEntidade, string nomeArquivo, string situacao, int id )
+        {
+
+            string str = "";
+            SqlCommand objCmd;
+            str = @"UPDATE  [dbo].[Integration] SET Situacao =@Situacao Where IntegrationId = @Id";
+                 
+            SqlConnection conn = ConexaoDb();
+            conn.Open();
+            try
+            {
+                objCmd = new SqlCommand(str, conn);
+                objCmd.Parameters.AddWithValue("@Situacao", situacao);
+                objCmd.Parameters.AddWithValue("@Id", id);
+                objCmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Utils util = new Utils();
+                util.InsereLog(0, nomeEntidade, nomeArquivo, "System", e.ToString());
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        public void RemoveLogMessage(string nomeEntidade, string nomeArquivo)
+        {
+
+            string str = "";
+            SqlCommand objCmd;
+            str = @"Delete From [dbo].[LogMessage] Where NomeArquivo = @nomeArquivo";
+            SqlConnection conn = ConexaoDb();
+            conn.Open();
+            try
+            {
+                objCmd = new SqlCommand(str, conn);
+                objCmd.Parameters.AddWithValue("@nomeArquivo", nomeArquivo);
+                objCmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Utils util = new Utils();
+                util.InsereLog(0, nomeEntidade, nomeArquivo, "System", e.ToString());
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+        }
+        #endregion
+
+        public void testeFTP()
+        {
+
+            using (Ftp client = new Ftp())
+            {
+                client.Connect("50.62.160.109");    // or ConnectSSL for SSL
+                client.Login("Integracao", "061180");
+
+                List<FtpItem> items = client.GetList();
+
+                foreach (FtpItem item in items)
+                {
+                    Console.WriteLine("Name:        {0}", item.Name);
+                    Console.WriteLine("Size:        {0}", item.Size);
+                    Console.WriteLine("Modify date: {0}", item.ModifyDate);
+
+                    Console.WriteLine("Is folder:   {0}", item.IsFolder);
+                    Console.WriteLine("Is file:     {0}", item.IsFile);
+                    Console.WriteLine("Is symlink:  {0}", item.IsSymlink);
+
+                    Console.WriteLine();
+                }
+
+                client.Close();
+            }
+        }
+
+
+        struct DirectoryItem
+        {
+            public Uri BaseUri;
+
+            public string AbsolutePath
+            {
+                get
+                {
+                    return string.Format("{0}/{1}", BaseUri, Name);
+                }
+            }
+
+            public DateTime DateCreated;
+            public bool IsDirectory;
+            public string Name;
+            public List<DirectoryItem> Items;
+        }
+
+        static List<DirectoryItem> GetDirectoryInformation(string address, string username, string password)
+        {
+            FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create(address);
+            request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+            request.Credentials = new NetworkCredential(username, password);
+            request.UsePassive = true;
+            request.UseBinary = true;
+            request.KeepAlive = false;
+
+            List<DirectoryItem> returnValue = new List<DirectoryItem>();
+            string[] list = null;
+
+            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+            {
+                list = reader.ReadToEnd().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            }
+
+            foreach (string line in list)
+            {
+                // Windows FTP Server Response Format
+                // DateCreated    IsDirectory    Name
+                string data = line;
+
+                // Parse date
+                string date = data.Substring(0, 17);
+                DateTime dateTime = DateTime.Parse(date);
+                data = data.Remove(0, 24);
+
+                // Parse <DIR>
+                string dir = data.Substring(0, 5);
+                bool isDirectory = dir.Equals("<dir>", StringComparison.InvariantCultureIgnoreCase);
+                data = data.Remove(0, 5);
+                data = data.Remove(0, 10);
+
+                // Parse name
+                string name = data;
+
+                // Create directory info
+                DirectoryItem item = new DirectoryItem();
+                item.BaseUri = new Uri(address);
+                item.DateCreated = dateTime;
+                item.IsDirectory = isDirectory;
+                item.Name = name;
+
+               // Debug.WriteLine(item.AbsolutePath);
+                item.Items = item.IsDirectory ? GetDirectoryInformation(item.AbsolutePath, username, password) : null;
+
+                returnValue.Add(item);
+            }
+
+            return returnValue;
+        }
+    
+
+    public string VarrerDiretorio(string caminhoIndividual)
         {
             //string tokenTransaction = MD5Hash.CalculaHash(DateTime.Now.ToString("yyyyMMddhmmtt"));
 
@@ -3014,19 +3270,42 @@ namespace IntegracaoPsP.Service.Functions
             string CaminhoErro      = db.Parametros.Where(x => x.Nome == "ArquivosInvalidos").Select(x => x.Valor).FirstOrDefault(); 
             string modeloXsd        = db.Parametros.Where(x => x.Nome == "Modelosxsd").Select(x => x.Valor).FirstOrDefault();  //ConfigurationManager.AppSettings["Modelosxsd"];
 
+
             List<LogMessage> lista = new List<LogMessage>();
             int qtdeArquivosvalidosXml = 0, qtdeArquivosvalidostxt = 0;
             int qtdeArquivosinvalidosXml = 0, qtdeArquivosinvalidostxt = 0;
             IEnumerable<FileInfo> arquivos;
-            #region pre requisito saber os locais dos arquivos a buscar
-            // string pastaOrigem = @"C:\Projetos\Docas\Fichas XML\Xml_Entrada";
-            // string pastaDestino = @"C:\Projetos\Docas\Fichas XML\Xml_Validado";
-            // string pastaDestinoForaPadrao = @"C:\Projetos\Docas\Fichas XML\Xml_ForaPadrao";
-            //string modeloXsd = @"C:\Projetos\Docas\Modelos XSD\";
-            #endregion
+            List<DirectoryItem> listing = GetDirectoryInformation("ftp://50.62.160.109/Arquivos/Entrada", "Integracao", "061180");
+
+            foreach (var itema in listing)
+            {
+
+                if (itema.Name.Contains(".TXT") || itema.Name.Contains(".txt"))
+                {
+                    var nomeArquivo = Path.GetFileName(itema.Name); // texto.txt
+                    var caminhoDestino = Path.Combine(CaminhoValido, nomeArquivo);
+                    var caminhoBusca = Path.Combine(CaminhoBusca, nomeArquivo);
+
+
+                    WebClient request = new WebClient();
+                    string url = itema.AbsolutePath;
+                    request.Credentials = new NetworkCredential("Integracao", "061180");
+
+                    request.DownloadFile(url, @"C:\Projetos\");
+                    byte[] newFileData = request.DownloadData(url);
+                    string fileString = Encoding.UTF8.GetString(newFileData);
+
+                    string xmlString = File.ReadAllText(itema.AbsolutePath);
+                    Utils util = new Utils();
+                    lista = util.ValidadorManifesto(itema.BaseUri.ToString(), itema.Name);
+
+                }
+
+            }
 
             if (!Directory.Exists(CaminhoValido))
                 Directory.CreateDirectory(CaminhoValido);
+
 
             if (string.IsNullOrEmpty(caminhoIndividual))
             {
@@ -3039,9 +3318,6 @@ namespace IntegracaoPsP.Service.Functions
          
             foreach (var arquivo in arquivos)
             {
-               // ValidacaoXML validadorXML = new ValidacaoXML();
-               /// lista = validadorXML.ValidarXml(arquivo.FullName, @"C:\Projetos\Docas\Modelos XSD\DE.xsd");
-
                 if (arquivo.Extension == ".xml"|| arquivo.Extension == ".XML")
                 {
                     ValidacaoXML validadorXML = new ValidacaoXML();
@@ -3093,6 +3369,10 @@ namespace IntegracaoPsP.Service.Functions
 
                         var nomeArquivo = Path.GetFileName(arquivo.FullName);
                         var caminhoDestino = Path.Combine(CaminhoErro, nomeArquivo);
+
+                        //ftpClient.upload(nomeArquivo, "ftp://50.62.160.109/", caminhoDestino);
+
+
                         arquivo.MoveTo(caminhoDestino);
                         xEle.Save(CaminhoErro + nomeArquivo + "_ERROR");
 
@@ -3150,6 +3430,9 @@ namespace IntegracaoPsP.Service.Functions
 
                             #endregion
 
+                            //Limpar erros anteriores
+                            RemoveLogMessage("",nomeArquivo);
+
                             foreach (var itemErro in lista)
                             {
                                 util.InsereLog(itemErro.Linha, itemErro.NomeEntidade, arquivo.Name, itemErro.Message, itemErro.MessageSystem);
@@ -3158,6 +3441,10 @@ namespace IntegracaoPsP.Service.Functions
                             {
                                 arquivo.MoveTo(caminhoDestino);
                                 xEle.Save(CaminhoErro + nomeArquivo + "_ERROR");
+                            }
+                            else
+                            {
+                                File.Delete(caminhoBusca);
                             }
                         }
                         else
@@ -3182,6 +3469,217 @@ namespace IntegracaoPsP.Service.Functions
                                + " TXT's válidos: " + qtdeArquivosvalidostxt.ToString() + " | inválidos: " + qtdeArquivosinvalidostxt.ToString()
                                 );
 
+        }
+
+        public string VarrerDiretorioFTP(string caminhoIndividual)
+        {
+            //string tokenTransaction = MD5Hash.CalculaHash(DateTime.Now.ToString("yyyyMMddhmmtt"));
+
+            string CaminhoBusca = db.Parametros.Where(x => x.Nome == "BuscaArquivos").Select(x => x.Valor).FirstOrDefault(); //ConfigurationManager.AppSettings["BuscaArquivos"];
+            string CaminhoValido = db.Parametros.Where(x => x.Nome == "ArquivosValidos").Select(x => x.Valor).FirstOrDefault();
+            string CaminhoErro = db.Parametros.Where(x => x.Nome == "ArquivosInvalidos").Select(x => x.Valor).FirstOrDefault();
+            string modeloXsd = db.Parametros.Where(x => x.Nome == "Modelosxsd").Select(x => x.Valor).FirstOrDefault();  //ConfigurationManager.AppSettings["Modelosxsd"];
+
+
+            List<LogMessage> lista = new List<LogMessage>();
+            int qtdeArquivosvalidosXml = 0, qtdeArquivosvalidostxt = 0;
+            int qtdeArquivosinvalidosXml = 0, qtdeArquivosinvalidostxt = 0;
+            IEnumerable<FileInfo> arquivos;
+
+           
+
+            if (string.IsNullOrEmpty(caminhoIndividual))
+            {
+                arquivos = new DirectoryInfo(CaminhoBusca).EnumerateFiles("*.*", SearchOption.AllDirectories).Where(x => x.Extension == ".txt" || x.Extension == ".TXT" || x.Extension == ".xml" || x.Extension == ".XML");
+            }
+            else
+            {
+                arquivos = new DirectoryInfo(CaminhoBusca).EnumerateFiles("*.*", SearchOption.AllDirectories).Where(x => x.FullName == caminhoIndividual);
+            }
+
+            foreach (var arquivo in arquivos)
+            {
+                if (arquivo.Extension == ".xml" || arquivo.Extension == ".XML")
+                {
+                    ValidacaoXML validadorXML = new ValidacaoXML();
+                    string[] arrayversaoArquivosTratado = Regex.Split(arquivo.Name, "_");
+                    //Arquivo xml
+                    // string nomeArquivosTratado = arquivo.Name.Substring(17, arquivo.Name.Length - 17).Substring(0, arquivo.Name.Substring(17, arquivo.Name.Length - 17).IndexOf("_"));
+                    string nomeArquivosTratado = arrayversaoArquivosTratado[arrayversaoArquivosTratado.Count() - 2].ToString();
+                    string versaoArquivosTratado = arrayversaoArquivosTratado[arrayversaoArquivosTratado.Count() - 1].ToString().Replace(".xml", "").Replace(".XML", "");
+
+                    string versaoArquivosxsd = nomeArquivosTratado + "_" + versaoArquivosTratado;
+                    string modeloArquivoXsd = string.Empty;
+                    if (db.ModelosXsd.Where(x => x.NomeArquivo == nomeArquivosTratado && x.Versao == versaoArquivosTratado).Count() > 0)
+                    {
+                        modeloArquivoXsd = db.ModelosXsd.Where(x => x.NomeArquivo == nomeArquivosTratado && x.Versao == versaoArquivosTratado).Select(x => x.Modelo).FirstOrDefault();
+                        lista = validadorXML.ValidarXml(arquivo.FullName, modeloArquivoXsd);
+                    }
+                    else
+                    {
+                        //Tratamento para o caso de não possui modelo no repositorio
+                    }
+
+
+                    // lista = validadorXML.ValidarXml(arquivo.FullName, modeloXsd + nomeArquivosTratado + ".xsd");
+
+                    // lista = validadorXML.ValidarXml(arquivo.FullName, modeloXsd + nomeArquivosTratado + ".xsd");
+
+                    if (lista.Where(x => x.NomeEntidade != "").Count() > 0)
+                    {
+                        qtdeArquivosinvalidosXml = qtdeArquivosinvalidosXml + 1;
+
+                        #region criando xml 
+                        var xEle = new XElement("LogMessage", from emp in lista
+                                                              select new XElement("Falhas",
+                                                                      new XAttribute("Message", emp.Message),
+                                                                      new XAttribute("MessageSystem", emp.MessageSystem),
+                                                                      new XAttribute("Data", emp.Data),
+                                                                      new XAttribute("NomeEntidade", emp.NomeEntidade)
+                            ));
+
+                        #endregion
+
+                        #region Inserindo erro na entidade
+                        Utils util = new Utils();
+
+                        foreach (var itemErro in lista)
+                        {
+                            util.InsereLog(itemErro.Linha, nomeArquivosTratado, arquivo.Name, itemErro.Message, itemErro.MessageSystem);
+                        }
+
+                        var nomeArquivo = Path.GetFileName(arquivo.FullName);
+                        var caminhoDestino = Path.Combine(CaminhoErro, nomeArquivo);
+
+                        //ftpClient.upload(nomeArquivo, "ftp://50.62.160.109/", caminhoDestino);
+
+
+                        arquivo.MoveTo(caminhoDestino);
+                        xEle.Save(CaminhoErro + nomeArquivo + "_ERROR");
+
+                        #endregion
+                    }
+                    else
+                    {
+                        //Arquivo validado
+                        qtdeArquivosvalidosXml = qtdeArquivosvalidosXml + 1;
+                        var nomeArquivo = Path.GetFileName(arquivo.FullName);
+                        var caminhoDestino = Path.Combine(CaminhoValido, nomeArquivo);
+                        Utils util = new Utils();
+                        if (!File.Exists(caminhoDestino))
+                        {
+                            arquivo.MoveTo(caminhoDestino);
+                            string xmlString = File.ReadAllText(caminhoDestino);
+                            if (db.Integracoes.Where(x => x.DtProcessamento != null && x.NomeArquivo == arquivo.Name).Count() > 0)
+                            {
+                                util.InsereLog(0, nomeArquivosTratado, arquivo.Name, "ERR_01: Arquivo processado anteriormente", "Arquivo processado anteriormente, favor verificar!");
+                                return "ERR_01: Arquivo processado anteriormente";
+                            }
+                            else
+                            {
+                                util.InsereIntegracaoXML(nomeArquivosTratado, xmlString, nomeArquivo);
+                            }
+                        }
+                    }
+                }
+                if (arquivo.Extension == ".txt" || arquivo.Extension == ".TXT")
+                {
+                    var nomeArquivo = Path.GetFileName(arquivo.FullName); // texto.txt
+                    var caminhoDestino = Path.Combine(CaminhoValido, nomeArquivo);
+                    var caminhoBusca = Path.Combine(CaminhoBusca, nomeArquivo);
+                    string xmlString = File.ReadAllText(caminhoBusca);
+                    Utils util = new Utils();
+                    if (db.Integracoes.Where(x => x.NomeArquivo == nomeArquivo && x.DtProcessamento != null).Count() <= 0)
+                    {
+                        if (nomeArquivo.Contains("ARQBOL"))
+                            lista = util.ValidadorManifesto(caminhoBusca, nomeArquivo);
+                        else
+                            lista = util.ValidadorManifesto(caminhoBusca, nomeArquivo);
+
+                        if (lista.Select(x => x.Message != "").FirstOrDefault())
+                        {
+                            qtdeArquivosinvalidostxt = qtdeArquivosinvalidostxt + 1;
+                            caminhoDestino = Path.Combine(CaminhoErro, nomeArquivo);
+                            #region criando xml 
+                            var xEle = new XElement("LogMessage", from emp in lista
+                                                                  select new XElement("Error",
+                                                                          new XAttribute("Message", emp.Message),
+                                                                          new XAttribute("MessageSystem", emp.MessageSystem),
+                                                                          new XAttribute("Data", emp.Data),
+                                                                          new XAttribute("Entidade", emp.NomeEntidade)
+                                ));
+
+                            #endregion
+
+                            //Limpar erros anteriores
+                            RemoveLogMessage("", nomeArquivo);
+
+                            foreach (var itemErro in lista)
+                            {
+                                util.InsereLog(itemErro.Linha, itemErro.NomeEntidade, arquivo.Name, itemErro.Message, itemErro.MessageSystem);
+                            }
+                            if (!File.Exists(caminhoDestino))
+                            {
+                                arquivo.MoveTo(caminhoDestino);
+                                xEle.Save(CaminhoErro + nomeArquivo + "_ERROR");
+                            }
+                            else
+                            {
+                                File.Delete(caminhoBusca);
+                            }
+                        }
+                        else
+                        {
+                            //Sucesso
+                            qtdeArquivosvalidostxt = qtdeArquivosvalidostxt + 1;
+                            if (!File.Exists(caminhoDestino))
+                                arquivo.MoveTo(caminhoDestino);
+                        }
+                    }
+                    else
+                    {
+                        //Arquivo já foi importado anteriormente
+                        qtdeArquivosinvalidostxt = qtdeArquivosinvalidostxt + 1;
+                        util.InsereLog(0, "Sistema", arquivo.Name, "Arquivo repetido", "Arquivo já consta na base para processamento");
+                    }
+
+                }
+            }
+
+            return string.Format("XML's válidos: " + qtdeArquivosvalidosXml.ToString() + " | inválidos: " + qtdeArquivosinvalidosXml.ToString()
+                               + " TXT's válidos: " + qtdeArquivosvalidostxt.ToString() + " | inválidos: " + qtdeArquivosinvalidostxt.ToString()
+                                );
+
+        }
+
+
+
+
+        // C#
+        private static void ListarConteudoFluent()
+        {
+            using (var client = new FluentFTP.FtpClient())
+            {
+                client.Host = "50.62.160.109";
+                client.Credentials = new System.Net.NetworkCredential("Integracao", "061180");
+                ListarConteudoFluentRecursivo(client, string.Empty);
+            }
+        }
+
+        private static void ListarConteudoFluentRecursivo(FluentFTP.FtpClient client, string caminho)
+        {
+            var arquivos = client.GetListing(caminho);
+            foreach (var arquivo in arquivos)
+            {
+                if (arquivo.Type == FluentFTP.FtpFileSystemObjectType.Directory)
+                {
+                    ListarConteudoFluentRecursivo(client, arquivo.FullName);
+                }
+                else
+                {
+                    Console.WriteLine("{0} || {1} b || {2:G}", arquivo.FullName, arquivo.Size, arquivo.Created != DateTime.MinValue ? arquivo.Created : arquivo.Modified);
+                }
+            }
         }
 
 

@@ -91,7 +91,9 @@ namespace IntegracaoPsP.Web.Models
 
         #region Entidades de Tratamento de Integracao
         public DbSet<Domain.Entities.Xml.Integration> Integracoes { get; set; }
-        public DbSet<Domain.Entities.Xml.IntegrationHistoryErro> HistoricoIntegracoes { get; set; }
+        public DbSet<Domain.Entities.Xml.IntegrationHistoryErro> HistoricoErroIntegracoes { get; set; }
+        public DbSet<Domain.Entities.Xml.IntegrationHistoric> Historico { get; set; }
+        
         #endregion
 
 

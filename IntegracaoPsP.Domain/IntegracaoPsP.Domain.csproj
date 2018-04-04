@@ -97,6 +97,7 @@
     <Compile Include="Entities\Manifesto\PortodeEscala.cs" />
     <Compile Include="Entities\Manifesto\Trailler.cs" />
     <Compile Include="Entities\Others\Data.cs" />
+    <Compile Include="Entities\Others\Ftp.cs" />
     <Compile Include="Entities\Others\ModeloXsd.cs" />
     <Compile Include="Entities\Others\Parametro.cs" />
     <Compile Include="Entities\Validacao\ValidacaoXml.cs" />
